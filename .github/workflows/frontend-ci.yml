@@ -7,6 +7,8 @@ on:
       - master
     paths:
       - frontend/**
+env:
+  ARTIFACT_NAME: ${{ vars.FRONTEND_ARTIFACT_NAME }}
 
 jobs:
   build-and-test:
@@ -39,5 +41,5 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: build-artifacts
+          name: ${{ env.ARTIFACT_NAME }}
           path: ./frontend/dist 
