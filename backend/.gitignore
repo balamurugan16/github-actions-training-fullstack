@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 
 .apt_generated
+
 .classpath
 .factorypath
 .project
