@@ -8,6 +8,12 @@ on:
     paths:
       - backend/**
 
+env:
+  MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}
+  MONGO_USER: ${{ secrets.MONGO_USER }}
+  MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
+  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
