@@ -26,9 +26,6 @@ jobs:
           java-version: 17
           cache: maven
           
-      - name: Install dependencies
-        run: mvn clean install
-
       - name: Run tests
         run: mvn test
 
