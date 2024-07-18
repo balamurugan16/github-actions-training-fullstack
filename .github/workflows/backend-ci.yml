@@ -27,7 +27,7 @@ jobs:
           cache: maven
           
       - name: Run tests
-        run: mvn test
+        run: mvn -B test
 
       - name: Build app
         run: mvn package
