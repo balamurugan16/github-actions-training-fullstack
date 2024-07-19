@@ -55,9 +55,11 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: dist
+      - run: ls -la
+      - run: cd dist && ls -la
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.APP_NAME }} 
           publish-profile: ${{ env.PUBLISH_PROFILE }}
-          package: ./dist/*
+          package: ./dist
