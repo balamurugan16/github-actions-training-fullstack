@@ -1,0 +1,31 @@
+name: Backend CICD
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - backend/**
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone code
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          cache: maven
+          distribution: temurin
+      - name: Run tests
+        run: mvn -B test
+      - name: Build the app
+        run: mvn package
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: java
+          path: ./backend/target/*.jar
