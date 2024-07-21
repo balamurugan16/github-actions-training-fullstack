@@ -1,4 +1,4 @@
-name: Backend
+name: Backend CICD
 
 on:
   push:
@@ -7,12 +7,12 @@ on:
     paths:
       - backend/**
 
+
 env:
   MONGO_DATABASE: ${{ secrets.MONGO_DATABASE }}
   MONGO_USER: ${{ secrets.MONGO_USER }}
   MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-
 
 jobs:
   build-and-test:
@@ -25,38 +25,34 @@ jobs:
     steps:
       - name: Clone code
         uses: actions/checkout@v3
-      - name: Set up Java
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: temurin
           java-version: 17
           cache: maven
-          
+          distribution: temurin
       - name: Run tests
         run: mvn -B test
-
-      - name: Build app
+      - name: Build the app
         run: mvn package
-      
-      - run: ls -a target
-
-      - name: Upload build artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ vars.BACKEND_ARTIFACT_NAME }}
           path: ./backend/target/*.jar
+  
   deploy:
+    runs-on: ubuntu-latest
     needs: build-and-test
-    uses: ./.github/workflows/deploy_to_azure.yml
-    with:
-      artifact-name: ${{ vars.BACKEND_ARTIFACT_NAME }}
-      artifact-path: target
-      package: target/*.jar 
-    secrets:
-      app-name: ${{ secrets.AZURE_JAVA_APP_NAME }}
-      publish-profile: ${{ secrets.AZURE_JAVA_PUBLISH_PROFILE }}
-
-
-
-
-    
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ vars.BACKEND_ARTIFACT_NAME }}
+          path: target
+      - name: Deploy App to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_JAVA_APP_NAME }}
+          publish-profile: ${{ secrets.AZURE_JAVA_PUBLISH_PROFILE }}
+          package: target/*.jar
