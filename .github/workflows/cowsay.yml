@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - master
+    paths:
+      - cowsay/**
+
+defaults:
+  run:
+    working-directory: ./cowsay
 
 jobs:
   build-test:
