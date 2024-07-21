@@ -7,7 +7,6 @@ test('say something', async (t) => {
   t.match(stdout, /< say >/);
 });
 
-
 test('think something', async (t) => {
   t.plan(1);
   const { stdout } = await execa.node('cli.js', ['--think', 'something']);
