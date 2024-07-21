@@ -1,0 +1,40 @@
+name: Deploy to Azure app service
+on:
+  workflow_call: 
+    inputs:
+      artifact-name:
+        type: string
+        required: true
+        description: Name of the artifact that needs to be downloaded
+      artifact-path:
+        type: string
+        required: true
+        description: Path of the artifact that needs to be downloaded
+      package:
+        type: string
+        required: true
+        description: Name of the artifact that needs to be downloaded
+    secrets:
+      app-name:
+        required: true
+        description: Name of the app service
+      publish-profile:
+        required: true
+        description: Publish of the app service
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.artifact-path }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.app-name }} 
+          publish-profile: ${{ secrets.publish-profile }}
+          package: ${{ inputs.package }}
