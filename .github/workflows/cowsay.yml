@@ -10,14 +10,17 @@ on:
 
 jobs:
   build-test:
+    defaults:
+      run:
+        working-directory: ./cowsay
+
     strategy:
       matrix:
         runners: [ubuntu-latest, windows-latest]
         node-version: [18, 16, 14]
+
     runs-on: ${{ matrix.runners }}
-    defaults:
-      run:
-        working-directory: ./cowsay
+
     steps: 
       - name: Clone code
         uses: actions/checkout@v4
@@ -26,6 +29,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm # add later
+          cache-dependency-path: ./frontend/package-lock.json
+
       - name: Install dependencies
         run: npm ci
       - name: Build
