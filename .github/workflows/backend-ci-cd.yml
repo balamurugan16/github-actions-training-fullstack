@@ -48,13 +48,13 @@ jobs:
   deploy:
     needs: build-and-test
     uses: ./.github/workflows/deploy_to_azure.yml
-    secrets:
-      app-name: ${{ secrets.AZURE_JAVA_APP_NAME }}
-      publish-profile: ${{ secrets.AZURE_JAVA_PUBLISH_PROFILE }}
     with:
       artifact-name: ${{ vars.BACKEND_ARTIFACT_NAME }}
       artifact-path: target
       package: target/*.jar 
+    secrets:
+      app-name: ${{ secrets.AZURE_JAVA_APP_NAME }}
+      publish-profile: ${{ secrets.AZURE_JAVA_PUBLISH_PROFILE }}
 
 
 
