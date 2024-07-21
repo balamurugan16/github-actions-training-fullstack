@@ -46,8 +46,8 @@ jobs:
     uses: ./.github/workflows/deploy_to_azure.yml
     with:
       artifact-name: ${{ vars.FRONTEND_ARTIFACT_NAME }}
-      artifact-path: target
-      package: target/*.jar 
+      artifact-path: output
+      package: output
     secrets:
       app-name: ${{ secrets.AZURE_REACT_APP_NAME }}
       publish-profile: ${{ secrets.AZURE_REACT_PUBLISH_PROFILE }}
