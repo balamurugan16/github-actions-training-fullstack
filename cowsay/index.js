@@ -1,7 +1,6 @@
 var balloon = require("./lib/balloon");
 var cows = require("./lib/cows");
 var faces = require("./lib/faces");
-
 /**
  * @param options
  * ## Face :

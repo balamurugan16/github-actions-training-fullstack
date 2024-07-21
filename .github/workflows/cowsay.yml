@@ -7,9 +7,6 @@ on:
     paths:
       - cowsay/**
 
-defaults:
-  run:
-    working-directory: ./cowsay
 
 jobs:
   build-test:
@@ -18,6 +15,9 @@ jobs:
         runners: [ubuntu-latest, windows-latest]
         node-version: [18, 16, 14]
     runs-on: ${{ matrix.runners }}
+    defaults:
+      run:
+        working-directory: ./cowsay
     steps: 
       - name: Clone code
         uses: actions/checkout@v4
