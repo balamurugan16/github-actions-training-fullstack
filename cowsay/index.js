@@ -10,6 +10,7 @@ var faces = require("./lib/faces");
  * - ### `e` : eyes
  * - ### `T` : tongue
  * 
+ * 
  * ## Cow :
  * Either specify a cow name (e.g. "fox") **_or_**
  * set the value of `r` to true which selects a random cow.
@@ -131,7 +132,7 @@ exports.think = function (options) {
  */
 exports.list = cows.list;
 
-function doIt (options, sayAloud) {
+function doIt(options, sayAloud) {
 	var cowFile;
 
 	if (options.r) {
