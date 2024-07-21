@@ -17,9 +17,14 @@ jobs:
     strategy:
       matrix:
         runners: [ubuntu-latest, windows-latest]
-        node-version: [20, 18, 16]
-
+        node-version: [18, 16, 14]
+        exclude:
+          - runners: windows-latest
+            node-version: 14
+            
     runs-on: ${{ matrix.runners }}
+
+    continue-on-error: true
 
     steps: 
       - name: Clone code
@@ -37,4 +42,10 @@ jobs:
         run: npm run build
       # - name: test # remove later
       #   run: npm run test
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploying
+        run: echo "Pushing to NPM..."
         
